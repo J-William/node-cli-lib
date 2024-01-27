@@ -1,8 +1,8 @@
 {
-  "name": "clite",
+  "name": "cli-lib",
   "version": "1.0.0",
-  "description": "a bare bones cli parser/framework",
-  "main": "main.js",
+  "description": "a small library of utilties for making cli apps",
+  "main": "index.js",
   "scripts": {
     "test": "node --test"
   },

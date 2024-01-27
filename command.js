@@ -1,4 +1,5 @@
-const { ArgumentTypes, OptionTypes } = require('./types.js');
+const { ArgumentTypes, OptionTypes } = require('./enums.js');
+const { InvalidFlagSpecification, InvalidInput } = require('./exceptions.js');
 
 class Command {
     constructor(name, description) {
@@ -41,9 +42,7 @@ class Command {
    * @returns chain of responsibility
    */
   option(name, description, flagString, type=OptionTypes.BOOL) {    
-    if (!OptionTypes.contains(type)) {
-      throw new Error();
-    }
+    OptionTypes.validate(type, type);
     // break flagString; trim whitespace
     // '--f, --flag' -> ['--f', '--flag']
     const flags = flagString.split(",").map((val) => val.trim());
@@ -51,7 +50,7 @@ class Command {
     // flag validation
     flags.forEach((e) => {
       if (!e.startsWith("-")) {
-        throw new Error(`${e} is an invalid flag specification! `)
+        throw new InvalidFlagSpecification(e);
       }
     });
 
@@ -73,9 +72,7 @@ class Command {
    * @returns chain of responsibility
    */
   argument(name, description, type=ArgumentTypes.TEXT) {
-    if (!ArgumentTypes.contains(type)) {
-      throw new Error(`Argument type parameter: ${type} is invalid!`)
-    }
+    ArgumentTypes.validate(type, type);
     const newArgDef = { name, description, type };
     // multiValueArguments are stored in their own
     // field two avoid filtering them from the array later
@@ -137,7 +134,10 @@ class Command {
     // if a multiValueArgument is defined collect the rest
     // of the arguments into it
     if (this._multiValueArgument) {
-      this._multiValueArgument.value = remainingInput;
+      // consume remaining input
+      this._multiValueArgument.value = [...remainingInput];
+      remainingInput.length = 0;
+
       parsedArgs.push(this._multiValueArgument);
     }
     return parsedArgs;
@@ -176,7 +176,7 @@ class Command {
           option.value = inputArgs.shift();
           
           if (!option.value) {
-            throw new Error(`Invalid input missing value for option: ${option.name}`);
+            throw new InvalidInput(option.name);
           }
         } else {
           option.value = true;

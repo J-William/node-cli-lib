@@ -1,13 +1,13 @@
 const Program = require('./program.js');
-const { ArgumentTypes, OptionTypes} = require('./types.js');
+const { ArgumentTypes, OptionTypes} = require('./enums.js');
 
 const f = new Program();
 
 f.command("foo")
-  .option("optA", "optA is a boolean option", "-a,--attack")
+  .option("optA", "optA is a boolean option", "-a, --attack")
   .option("optB", "optB is a value option", "--begin", OptionTypes.VALUE)
-  .argument("cal", "description")
-  .argument("dor", "anotha description")
+  .argument("cal", "description", ArgumentTypes.VALUE)
+  .argument("dor", "anotha description", ArgumentTypes.LIST)
   .action((input) => {
       console.log(input);
   });

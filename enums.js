@@ -1,4 +1,4 @@
-const Enumeration = require('./enumeration.js');
+const Enumeration = require('./types/enumeration.js');
 const { InvalidOptionType, InvalidArgumentType } = require('./exceptions.js')
 
 const OptionTypes = new Enumeration(
@@ -10,5 +10,7 @@ const ArgumentTypes = new Enumeration(
     {TEXT: 'TEXT', LIST: 'LIST' },
     InvalidArgumentType
 )
+
+
 
 module.exports =  { OptionTypes, ArgumentTypes };

@@ -1,14 +1,14 @@
 class Enumeration {
-    constructor(values, error) {
+    constructor(values, errorClass=Error) {
         if (typeof values !== 'object') {
             throw new Error('values must be an object of kv pairs')
         }
-        if (!(error instanceof Error||error.prototype instanceof Error)) {
-            throw new Error('error must be an instance or extension of Error')
+        if (!((errorClass == Error)||(errorClass.prototype instanceof Error))) {
+            throw new Error('errorClass must be an extension of Error')
         }
 
         this._values = Object.freeze(values);
-        this._error = error;
+        this._errorClass = errorClass;
         // Add the values as properties so they can
         // be accessed directly
         for (const [key, value] of Object.entries(values)) {
@@ -30,15 +30,15 @@ class Enumeration {
         return Object.values(this._values).includes(val);
     }
     /**
-     * Throws the defined Error instance with a given message
+     * Throws the defined Error class with a given message
      * if val is not a member of the enum
      * 
      * @param {(string|number)} val - the value to test
-     * @param {*} failMsg the message to display upon failure
+     * @param {string} failMsg the message to pass to the Error
      */
     validate(val, failMsg) {
         if (!this.contains(val)) {
-            const err = new this._error(failMsg);
+            const err = new this._errorClass(failMsg);
             Error.captureStackTrace(err, this.validate);
             throw err;
         }
