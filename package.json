@@ -1,0 +1,11 @@
+{
+  "name": "clite",
+  "version": "1.0.0",
+  "description": "a bare bones cli parser/framework",
+  "main": "main.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "author": "will seymour",
+  "license": "ISC"
+}
