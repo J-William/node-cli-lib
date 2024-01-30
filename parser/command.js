@@ -154,7 +154,6 @@ class Command {
    * @returns {object} {options[], arguments[], unused[]}
    */
   parse(inputArgs) {
-    // TODO write a comment here 
     let parsedOptions = [];
     let parsedArguments = [];
 

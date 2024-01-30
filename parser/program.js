@@ -1,4 +1,5 @@
 const Command = require('./command.js');
+const { InvalidInput } = require('./exceptions.js');
 
 class Program {
   constructor() {
@@ -38,13 +39,13 @@ class Program {
     const command = this._commands.get(command_input);
 
     if (!command) {
-      throw new Error(`Invalid input command not recognized: ${command_input}`);
+      throw new InvalidInput(`command not recognized: ${command_input}`);
     }
 
     try {
         command.process(inputArgs);
     } catch(err) {
-        l.error(err);        
+        console.error(err);        
     }
   }
 }
