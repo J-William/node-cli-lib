@@ -1,4 +1,4 @@
-const Enumeration = require('./types/enumeration.js');
+const Enumeration = require('../types/enumeration.js');
 const { InvalidOptionType, InvalidArgumentType } = require('./exceptions.js')
 
 const OptionTypes = new Enumeration(

@@ -1,5 +1,5 @@
-const Program = require('./program.js');
-const { ArgumentTypes, OptionTypes} = require('./enums.js');
+const Program = require('./parser/program.js');
+const { ArgumentTypes, OptionTypes} = require('./parser/enums.js');
 
 const f = new Program();
 
